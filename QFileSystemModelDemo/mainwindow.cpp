@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <QtSystemDetection>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -9,7 +11,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QString path = "./";
+#ifdef Q_OS_WIN
+    QString path = "c:/";
+#else
+    QString path = "/";
+#endif
 
     // Dir model
     dirModel->setFilter(QDir::NoDotAndDotDot | QDir::Dirs);
@@ -17,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeView->setModel(dirModel);
 
     // Files model
-    filesModel->setFilter(QDir::Files);
+    filesModel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
     filesModel->setRootPath(path);
     ui->listView->setModel(filesModel);
 }
