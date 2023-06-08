@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QStandardItemModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -15,7 +16,11 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+private slots:
+    void on_tableView_clicked(const QModelIndex &index);
+
 private:
     Ui::Widget *ui;
+    QStandardItemModel *treeModel, *tableModel;
 };
 #endif // WIDGET_H
